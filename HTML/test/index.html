@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="GBK">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="//at.alicdn.com/t/c/font_3568373_lx5xs1or0yh.js"></script>
+<!--    <script src="//at.alicdn.com/t/c/font_3792943_so8wjixrln.js"></script>-->
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: rgb(100, 100, 100);
+            background-size: cover;
+            background-position: center center;
+            background-attachment:fixed;
+        }
+        #search-div{
+            height: 40px;
+            background-color: rgb(255, 255, 255);
+            width: 44%;
+            margin:120px auto;
+            /*border: 2px solid black;*/
+            min-width: 600px;
+            border-radius: 10px;
+        }
+        #search-div:hover{
+            /*box-shadow:0 1px 2px 2px rgb(193,193,193);*/
+            border: 1px solid black;
+
+        }
+        #search{
+            height: 90%;
+            width: 85%;
+            border: none;
+            outline: none;
+            /* opacity: 0; */
+            font-size: 14px;
+            margin-left: 30px;
+        }
+
+        #background{
+            /* display: inline-block; */
+            width: 70px;
+            margin-left: 90%;
+            margin-top: 30px;
+            /* border: 2px solid rgb(133, 132, 132); */
+            background-color:rgba(0, 0, 0, 0) ;
+            background-size: 100%;
+            color: rgb(2, 2, 2);
+            cursor: pointer;
+            height: 30px;
+        }
+        #login{
+            margin-top: 10px;
+            height: 30px;
+            cursor: pointer;
+        }
+        #denglu{
+            /*float: right;*/
+            height: 30px;
+            width: 30px;
+            /*margin-right:6% ;*/
+            margin-left: 90%;
+        }
+        #user{
+            text-decoration: underline;
+            color:rgb(100,173,235) ;
+            display: inline-block;
+            height:30px ;
+            margin-top: -35px;
+        }
+        #picture{
+            width: 25px;
+            height: 35px;
+        }
+        #change-back span{
+            float: right;
+        }
+        #search-btn{
+            width:35px;
+            cursor: pointer;
+            /*margin-right: 8px;*/
+            height: 30px;
+            /*margin-top: 10px;*/
+            border: none;
+            outline: none;
+            background-color: white;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+        #btn{
+            width: 30px;
+            height: 35px;
+        }
+        #search,#search-btn{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div id="background">
+    <svg class="icon" aria-hidden="true" id="picture">
+        <use xlink:href="#icon-kaipingheji"></use>
+    </svg>
+</div>
+<div id="login">
+    <svg class="icon" aria-hidden="true" id="denglu">
+        <use xlink:href="#icon-guanli"></use>
+    </svg>
+    <span id="user">login</span>
+</div>
+
+<div id="search-div">
+    <input type="text" name="word" id="search" placeholder="请输入关键字">
+    <div id="search-btn">
+        <svg class="icon" aria-hidden="true" id="btn">
+            <use xlink:href="#icon-sousuo"></use>
+        </svg>
+    </div>
+
+</div>
+<script>
+    $(function (){
+        // var local = 'http://192.168.3.22:8080'
+        //???????????
+        // var local = 'http://192.168.0.127:8080'
+        var local = 'http://192.168.0.106:8080'
+        //登录
+        var user=getCookie('user');
+        var password=getCookie('password')
+        // console.log(user)
+        if(user){
+            $('#user').html(user)
+            setCookie('user',user);
+            setCookie('password',password);
+        }
+        //清除cookie
+        // window.onbeforeunload = function (){
+        //     setCookie('user','',-1);
+        //     setCookie('password','',-1);
+        // }
+        $('#login').click(function (){
+            $.ajax({
+                url:local+`/loginPage`,
+                data:'Login',
+                type:'get',
+                success:function (data){
+                    console.log(data)
+                    // window.location.replace(local+'/loginPage')
+                    window.location.href=local+'/loginPage'
+
+                }
+            })
+        })
+        var imgArr = [
+            'https://img0.baidu.com/it/u=3588455614,2766397860&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-baofun.zhhainiao.com%2Ffs%2F54e1dc2fb96b336d577039119a3afb58.jpg&refer=http%3A%2F%2Fimg-baofun.zhhainiao.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669109245&t=111899c0ae7b3d51c47c4ebe8e09a39b',
+            // 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2019-09-09%2F5d75f2e83628d.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669109245&t=65419a83bc48ad76821ce61ce12ca2ad',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F4%2F54a24b4083caf.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669391436&t=9c32ce86389bae8e73e2f89271a5ddc8',
+            'https://img1.baidu.com/it/u=1510497170,739580478&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fd.zdqx.com%2Fdhsc_180125%2F009.jpg&refer=http%3A%2F%2Fd.zdqx.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669391591&t=81ad7a708b2e209386699500b7bf5b0f',
+            'https://t7.baidu.com/it/u=1871347157,3677968557&fm=193&f=GIF',
+            // 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F6%2F59a68891160b2.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669391699&t=1cb12f5e48a6796e8bea7bc48084c019',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F7%2F542a1e52d13c0.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669391727&t=cd8c03a2a52101b802df51543fac499e',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fphoto%2F2010-5-10%2Fenterdesk.com-4052BF8C347566213E9D3D6C1B864759.png&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669391436&t=ec42ea7610e2951dba2b724265db00a3'
+        ]
+        // var n1=Math.floor(Math.random()*10+1);//???1??10???????????
+        var n2=parseInt(10*Math.random())-2;//???0??10???????????
+
+        $('body').css('background-image', 'url('+imgArr[2]+')');
+
+
+        $('#search').focus(function(){
+            $(this).attr('placeholder',' ')
+        })
+        $('#search').blur(function(){
+            $(this).attr('placeholder','')
+        })
+
+        $('#background').click(function(){
+            // alert('1')
+            var n2=parseInt(10*Math.random());//???0??10???????????
+            $('body').css('background-image', 'url('+imgArr[n2]+')');
+        })
+
+        $('#search').keyup(function (e){
+            if(e.keyCode==13){
+                $("#search-btn").trigger("click")
+            }
+        })
+        $('#search-btn').click(function(){
+            var text = $('#search').val()
+            console.log(text)
+            var word=text
+            text1 = encodeURIComponent(text,true)
+            console.log('text1=='+text1)
+            // console.log('local+local+'/sp'+text1);
+            $.ajax({
+                url:local+'/sp',
+                data:text,
+                type:'GET',
+                async:false,
+                success:function(data,status,xhr){
+                    //????????xhr
+                    console.log(xhr)
+                    if(data){
+                        console.log("------------")
+                        window.location.replace(local+`/sp?${word}`);
+                        console.log("===============")
+                        console.log('success')
+                    }
+                },
+                error:function(){
+                    console.log('????????')
+                }
+            })
+        })
+    })
+    function setCookie(cname,value,seconds){
+        var edate = new Date();
+        edate.setTime(edate.getTime()+seconds*1000);
+        var cData = cname + "=" + value;
+        cData += (seconds == null)? '' : (';expires'+edate.toUTCString());
+        document.cookie = cData;
+    }
+    function getCookie(cname) {
+        var name = cname + '=';
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+    }
+</script>
+</body>
+
+</html>

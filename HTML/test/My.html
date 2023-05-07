@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="GBK">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人主页</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+  <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.45/vue.cjs.js"></script> -->
+  <!-- <script src="../vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    body{
+      margin: 0;
+    }
+    li{
+      list-style: none;
+    }
+    #topper{
+      height: 80px;
+      width: 100%;
+      border-bottom:1px solid rgb(226, 225, 225);
+      box-shadow: 0px 5px 5px 2px rgb(221, 219, 219);
+      position: fixed;
+      z-index: 999;
+      background-color: white;
+      margin-top: -20px;
+    }
+    #topper li{
+      float: left;
+      line-height: 80px;
+    }
+    #topper li:first-child{
+      margin-left: 40px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    #topper li:nth-child(2){
+      margin-left: 60px;
+      width: 350px;
+      height: 40px;
+      background-color: rgb(255, 255, 255);
+      margin-top: 20px;
+      border: 2px solid rgb(168, 217, 183);
+      border-radius: 5px;
+    }
+    #topper li:nth-child(2) input{
+      display: block;
+      width: 270px;
+      height: 35px;
+      float: left;
+      font-size: 18px;
+      outline: none;
+      border: none;
+      margin-left: 10px;
+    }
+    #topper li:nth-child(2) button{
+      font-family:'宋体';
+      font-weight: bold;
+      font-size: 20px;
+      float: left;
+      height: 40px;
+      width: 60px;
+      outline: none;
+      border: none;
+      background-color: white;
+    }
+    #topper li:nth-child(3),#topper li:nth-child(4){
+      margin-left: 50px;
+      font-size: 18px;
+    }
+    #header{
+      padding-top: 100px;
+      width: 100%;
+      height: 100px;
+      /* background-color: antiquewhite; */
+      border-bottom: 1px solid rgb(166, 165, 165);
+    }
+    #header li{
+      float: left;
+      line-height: 60px;
+    }
+    #header li img{
+      width: 90px;
+      height: 90px;
+      /* line-height: 200px; */
+    }
+    #header li:nth-child(2){
+      font-size: 20px;
+      margin-left: 20px;
+    }
+    #header li:nth-child(3){
+      margin-top: 50px;
+      margin-left: -80px;
+      font-size: 18px;
+      color: rgb(144, 144, 145);
+    }
+    #header li:nth-child(n+4){
+      margin-left: 70px;
+      line-height: 30px;
+      margin-top: 20px;
+      width: 60px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    #header li:nth-child(n+4) span{
+      color: rgb(136, 135, 134);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    #left{
+      width: 160px;
+      height: 100%;
+      /* background-color: aquamarine; */
+    }
+    #left li{
+      height: 80px;
+      font-size: 22px;
+      text-align: center;
+      line-height: 80px;
+      cursor: pointer;
+    }
+    #left li:hover{
+      color: rgb(26,115,232);
+      font-size: 25px;
+    }
+  /*  推荐回答*/
+    .nav{
+      /*background-color: navajowhite;*/
+      height: 100%;
+      width: 800px;
+      margin-left: 300px;
+      margin-top: -400px;
+      border: 1px solid #a8a7a7;
+      border-radius: 5px;
+      box-shadow: 2px 2px 7px 1px #bdbaba;
+    }
+    .nav li{
+      height: 70px;
+      /*border-bottom:1px solid #a8a7a7 ;*/
+      line-height: 30px;
+      padding-top: 10px;
+      cursor: pointer;
+    }
+    .nav li:hover{
+      color: rgb(26,115,232);
+
+    }
+    #nav2{
+      /*background-color: palevioletred;*/
+      /*height: 100%;*/
+    }
+    #nav2 input{
+      width: 350px;
+      height: 35px;
+      border: 1px solid #a8a8a8;
+      border-radius: 5px;
+    }
+    #nav2 button{
+      height: 38px;
+      width: 80px;
+      background-color: #70d2db;
+      border: none;
+    }
+    #nav2 span{
+      display: inline-block;
+      margin-top: 20px;
+    }
+    #nav2 li{
+      /*border: 1px solid #a4a2a2;*/
+    }
+    #nav3{
+      /*background-color: #bddb70;*/
+      height: 40px;
+    }
+    #nav4{
+      /*background-color: #db8d70;*/
+      height: 40px;
+    }
+    #nav5{
+      /*background-color: #70d2db;*/
+      height: 40px;
+    }
+
+  </style>
+</head>
+<body>
+<div id="root">
+  <ul id="topper">
+    <li>个人主页</li>
+    <li><input type="text" placeholder="请在此输入问题"><button>搜索</button></li>
+    <li><a href="http://192.168.0.106:8080">首页</a></li>
+    <li>设置</li>
+  </ul>
+  <ul id="header">
+    <li><img src="" alt=""></li>
+    <li>用户名：{{user.username}}</li>
+    <li>简介：{{user.info}}</li>
+    <li>{{number.answer}} <br> <span>回答数</span></li>
+    <li>{{number.question}} <br>  <span>提问数</span></li>
+    <li>{{number.great}} <br>  <span>获赞</span></li>
+  </ul>
+  <ul id="left">
+    <li>推荐回答</li>
+    <li>我的提问</li>
+    <li>我的回答</li>
+    <li>账号设置</li>
+    <li>我的反馈</li>
+  </ul>
+  <div id="right">
+    <ul class="nav" id="nav1"></ul>
+    <ul class="nav" id="nav2">
+      <input type="text">
+      <button >提问</button>
+      <br>
+      <span>历史提问</span>
+      <li>浙江理工大学在哪？</li>
+      <li>浙江理工大学有几个校区？</li>
+<!--      <li>浙江理工大学在哪？</li>-->
+<!--      <li>浙江理工大学在哪？</li>-->
+
+<!--      <li>浙江理工大学在哪？</li>-->
+    </ul>
+    <ul class="nav" id="nav3">
+      <li>实变函数问题？</li>
+      <li>我不知道</li>
+    </ul>
+    <ul class="nav" id="nav4"></ul>
+    <ul class="nav" id="nav5"></ul>
+  </div>
+</div>
+<script>
+  $(function (){
+    var user = getCookie('user')
+    new Vue({
+      el:'#root',
+      data:{
+        user:{
+          username:user,
+          info:'明天会更好！',
+        },
+        number:{
+          answer:1,
+          question:2,
+          great:0,
+        }
+      }
+    });
+    // var local = 'http://192.168.3.22:8080'
+    // var local = 'http://192.168.245.98:8080'
+    var local = 'http://192.168.0.106:8080'
+
+
+
+    var arr = ['函数','吃','游戏','学习','糖','国家','战争','电脑','区别','怎么']
+    var n2=parseInt(10*Math.random());//输出0～10之间的随机整数
+    $.ajax({
+      url:local+`/sp/search`,
+      data:arr[n2],
+      type:'GET',
+      success:function (data){
+        var arr = new  Array
+        var obj = eval(data)
+        // console.log(obj)
+        //   生成右侧边栏
+        for(let index=0;index<10;index++){
+          var li = $('<li></li>')
+          //插入信息
+          li.html(obj[index].title)
+          //    将文件名存在一个数组中
+          arr[index] = (obj[index].fileName)
+          // console.log(arr[index])
+          //    将li插入ul
+          $("#nav1").append(li)
+
+          if(li.onclick==true){
+            alert('1')
+          }
+        }
+        for(let i=0;i<11;i++) {
+          $('.right-nav').children().eq(i).click(function () {
+            // alert($(this).val())
+            var n = i - 1
+            // console.log(arr[n])
+            // console.log(this)
+            var num = arr[n].split('.')
+            var html = num[0]+'.html'
+            // console.log('num=' + num[0])
+            var url = local+`/love/qq?`+html
+            //点击小标题，跳转页面
+            $.ajax({
+              url: url,
+              type: 'GET',
+              data: arr[n],
+              success: function (data) {
+                window.open(local+'/love/qq?' + num[0])
+                console.log("success!")
+                console.log(data)
+              }
+            })
+          })
+
+        }
+      }
+
+    })
+    $('#right').children().css('display','none')
+    $('#left li').click(function (){
+      $('#left li').css('color','black')
+      $(this).css('color','rgb(26,115,232)')
+      console.log($(this).index())
+      var index = $(this).index()
+      $('#right').children().css('display','none')
+      $('#right').children().eq(index).css('display','block')
+    })
+
+
+  })
+
+  function getCookie(cname) {
+    var name = cname + '=';
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+  }
+</script>
+</body>
+</html>

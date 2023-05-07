@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="GBK">
+    <meta name="referrer" content="no-referrer" />
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="//at.alicdn.com/t/c/font_3568373_nydbx9itwrr.js"></script>
+    <style>
+    body{
+
+        background-image: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-baofun.zhhainiao.com%2Ffs%2F7be18b6fc6e5d1a836533581cf97cf86.jpg&refer=http%3A%2F%2Fimg-baofun.zhhainiao.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671087261&t=90e4977c705094153388c9b1571fb0eb");
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        background-position: center center;
+        background-attachment:fixed;
+    }
+        #mess{
+            width: 1000px;
+            margin-left: 100px;
+            height: 100%;
+            /*background-color: bisque;*/
+        }
+        #top{
+            margin-left: -100px;
+            padding-left: 100px;
+            padding-right: 100px;
+            height: 140px;
+            width: 100%;
+            position: fixed;
+            box-shadow: 0 15px 10px -15px rgb(195, 195, 195);
+            margin-top: -10px;
+            /*margin-top: -180px;*/
+            z-index: 999;
+            background-color: black;
+            opacity: 0.7;
+            color: white;
+        }
+
+        .title{
+
+            display: inline-block;
+            width: 700px;
+            margin-top: 10px;
+            font-size: 25px;
+            /*background-color: #616362;*/
+            height: 80px;
+            line-height: 40px;
+        }
+
+        /*发布问题*/
+        #request-div{
+            width: 160px;
+            /*border: 2px solid;*/
+            height: 45px;
+            float: right;
+            margin-right: 10%;
+            background-color: rgb(74,151,248);
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+
+        }
+        #request{
+            display: inline-block;
+            /*margin-top: -30px;*/
+            height: 40px;
+            width: 80px;
+            border: none;
+            font-size: 16px;
+            background-color: rgb(74,151,248);
+            cursor: pointer;
+        }
+        #tiwen{
+            float: left;
+            width: 35px;
+            height: 45px;
+            margin-left: 20px;
+        }
+        /*    回答问题*/
+        #response-div{
+            width: 140px;
+            height: 45px;
+            background-color:rgb(55,247,173) ;
+            /*background: linear-gradient(90deg,red,blue);*/
+            /*border: 2px solid;*/
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #btn{
+            display: inline-block;
+            /*margin-top: -30px;*/
+            height: 40px;
+            width: 80px;
+            border: none;
+            font-size: 16px;
+            background-color:rgb(55,247,173) ;
+            cursor: pointer;
+        }
+        #bianji{
+            float: left;
+            width: 35px;
+            height: 45px;
+            margin-left: 10px;
+        }
+        .block{
+            height: 100px;
+            width: 100px;
+        }
+        .outer{
+            padding-left: 10px;
+            margin: 0 auto;
+            margin-top: 30px;
+            padding-top: 20px;
+            width: 750px;
+        }
+        #mess .outer:first-child{
+            /*margin-top: -30px;*/
+        }
+        .answer{
+            border-bottom: 1px dashed rgb(97,99,98) ;
+            width: 700px;
+            height: 120%;
+            /*background-color: #00B7FF;*/
+            padding: 30px;
+            line-height: 30px;
+            white-space: pre-wrap;
+        }
+        /*回答*/
+        .answer p{
+
+        }
+        /*超链接颜色*/
+        a{
+            color: rgb(63,136,191);
+        }
+        /*更多回答*/
+        #more{
+            margin: 0 auto;
+            margin-top: 30px;
+            width: 750px;
+            margin-left: 225px;
+            /*margin-left: 100px;*/
+            height: 40px;
+            /*background-color: red;*/
+            border-top: 1px dashed rgb(97,99,98) ;
+            border-bottom: 1px dashed rgb(97,99,98) ;
+            text-decoration: underline;
+            text-align: center;
+            line-height: 60px;
+            margin-bottom: 80px;
+            cursor: pointer;
+            background-color: rgb(227,229,230);
+            opacity: 0.6;
+
+        }
+        /*#more:hover{*/
+        /*    background-color: rgb(227,229,230);*/
+        /*}*/
+        #xiangxai{
+            width: 20px;
+            height:20px;
+        }
+        /*    折叠回答*/
+        /*更多回答*/
+        #less{
+            margin:0 auto;
+            margin-left: 225px;
+            margin-top: 30px;
+            width: 750px;
+            height: 40px;
+            /*background-color: red;*/
+            border-top: 1px dashed rgb(97,99,98) ;
+            border-bottom: 1px dashed rgb(97,99,98) ;
+            text-decoration: underline;
+            text-align: center;
+            line-height: 20px;
+            margin-bottom: 80px;
+            cursor: pointer;
+            background-color: rgb(227,229,230);
+            opacity: 0.6;
+        }
+        /*#less:hover{*/
+        /*}*/
+
+        #xiangshang{
+            width: 20px;
+            height:20px;
+        }
+        /*    问题无答案*/
+        .null{
+            border-bottom: 1px dashed rgb(97,99,98) ;
+            width: 800px;
+            height: 120%;
+            /*background-color: #00B7FF;*/
+            padding: 30px;
+            line-height: 30px;
+            white-space: pre-wrap;
+        }
+        .null p{
+            margin-left: 50px;
+            font-size: 20px;
+            color: white;
+        }
+        #tishi{
+            width: 100px;
+            height: 100px;
+        }
+        /*    暂无更多回答*/
+        .hint{
+            margin-top: 20px;
+            margin-bottom: 80px;
+            text-align: center;
+            color: white;
+        }
+        /*    视频播放*/
+        video{
+            margin-left: 100px;
+        }
+
+    /*    右边图标设置*/
+        #login{
+            width:100px;
+            height: 50px;
+            float: right;
+            margin-top: -50px;
+            margin-right: 10%;
+            cursor: pointer;
+        }
+        #login svg{
+            display: inline-block;
+            float: right;
+            width: 30px;
+            height: 50px;
+            margin-right: 70px;
+        }
+
+        #login-span{
+            display: inline-block;
+            margin-left: -65px;
+            /*margin-bottom: 30px;*/
+            height: 50px;
+            margin-top: 15px;
+            width: 50px;
+        }
+        #myanswer{
+            margin:0 auto;
+            margin-left: 225px;
+            margin-top: 10px;
+            width: 750px;
+            height: 160px;
+            background-color: rgb(227,229,230);
+            opacity: 0.9;
+            margin-bottom: 150px;
+        }
+        #answer-content{
+            margin: 30px;
+            height: 100px;
+            width: 600px;
+            font-size: 20px;
+        }
+        #myanswer button{
+            width: 100px;
+            height: 40px;
+            outline: none;
+            border: none;
+            background: -webkit-linear-gradient(left,rgb(55,247,173),rgb(63,136,191));
+            border-radius: 5px;
+            color: black;
+            float: right;
+            margin-right: 30px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+<!--<img src="">-->
+<!--<video></video>-->
+<div id="mess">
+    <div id="top">
+        <!--放标题-->
+        <span class="title"></span>
+
+        <!--       发布问题-->
+        <div id="request-div">
+            <button id="request">发布问题</button>
+            <svg class="icon" aria-hidden="true" id="tiwen">
+                <use xlink:href="#icon-tiwen-xianxing"></use>
+            </svg>
+        </div>
+        <br>
+        <!--        回答问题-->
+        <div id="response-div">
+            <button id="btn">我来回答</button>
+            <svg class="icon" aria-hidden="true" id="bianji">
+                <use xlink:href="#icon-bianji1"></use>
+            </svg>
+        </div>
+
+<!--        图标信息-->
+            <!--登录-->
+            <div id="login">
+                <span id="login-span">登录</span>
+
+                <svg class="icon" aria-hidden="true" id="user">
+                    <use xlink:href="#icon-gerenzhongxin"></use>
+                </svg>
+            </div>
+    </div>
+    <div class="block">
+    </div>
+</div>
+<!--        答案为空时-->
+<div class="null">
+    <svg class="icon" aria-hidden="true" id="tishi">
+        <use xlink:href="#icon-tishi"></use>
+    </svg>
+    <p>此问题还暂无回答哦~</p>
+    <a href="javascript:;">我来回答</a>
+</div>
+
+<div id="more">
+    <!--        <p>更多回答</p>-->
+    <svg class="icon" aria-hidden="true" id="xiangxai">
+        <use xlink:href="#icon-xiangxiazhanhang"></use>
+    </svg>
+</div>
+<div id="less">
+    <svg class="icon" aria-hidden="true" id="xiangshang">
+        <use xlink:href="#icon-xiangshangzhanhang"></use>
+    </svg>
+</div>
+
+<div id="myanswer">
+    <textarea id="answer-content" placeholder="写下我的观点..."></textarea>
+    <button id="publish">发表</button>
+</div>
+<script>
+    $(function (){
+        // var local = 'http://192.168.245.98:8080'
+        // var local = 'http://192.168.3.22:8080'
+        // var local = 'http://192.168.0.127:8080'
+        var local = 'http://192.168.0.106:8080'
+
+        //登录
+        var user=getCookie('user');
+        console.log(user)
+        if(user){
+            $('#login-span').html(user);
+            $('#login-span').css('color','rgb(100,173,235)')
+        }
+        $('#login').click(function (){
+            $.ajax({
+                url:local+`/loginPage`,
+                data:'Login',
+                type:'get',
+                success:function (data){
+                    window.location.replace(local+'/loginPage')
+
+                }
+            })
+        })
+        //提问
+        $('#request-div').click(function (){
+            $.ajax({
+                url:local+`/question`,
+                data:'request',
+                type:'get',
+                success:function (data){
+                    window.location.replace(local+'/questionPage')
+                }
+            })
+        })
+        //回答问题
+        $('#response-div').click(function (){
+            $('#answer-content').focus();
+            $('body').animate({
+                scrollTop:$('#myanswer').offset().top-$(window).height()
+            },400)
+        })
+        //更多回答内容不可见
+        $('#more').css('display','none')
+        //向上折叠不可见
+        $('#less').css('display','none')
+        //问题为空时
+        $('.null').css('display','none')
+
+        // console.log(window.location.search)
+        var all = window.location.search;
+        var file = all.split('?')
+        var txt =file[1] + '.txt'
+        // console.log(txt)
+        //  获取问题题目
+        $.ajax({
+
+        })
+        //  获取问题内容
+        $.ajax({
+            url:local+'/love/qq/getReplay/'+txt,
+            //  http://192.168.144.98:8080/love/qq/getReplay/xxxxxx.txt这样不是txt？对txt
+            type:'type',
+            data:' ',
+            success:function (data){
+                // console.log(data)
+                var obj = data;
+
+                $('.title').text(data.title)
+
+                //当问题无答案时
+                if(obj.arr.length==0){
+                    $('.null').css('display','block')
+                }
+                //当问题答案只有一条时
+
+                if(obj.arr.length!=0){
+                    // 显示第一条回答
+                    //提取视频链接
+                    if(data.arr[0].indexOf('video') != -1 ){
+                        var data1 = replace(data1)
+                        // console.log(data1)
+                    }else{
+                        // console.log('无视频')
+                    }
+                    //回答一：
+                    var p = $('<p></p>')
+                    p.html("回答1:")
+                    //放置答案
+                    var div1 =$('<div class="answer"></div>')
+                    div1.html(obj.arr[0])
+                    var div2 = $('<div class="outer"></div>')
+                    div2.append(p)
+                    div2.append(div1)
+                    $('#mess').append(div2)
+                    //显示视频
+                    var video = $('<video controls width="50%"></video>')
+                    var src = $('video').attr('src')
+                    // console.log(src)
+                    var img = $('video').attr('img')
+                    $('video').css('display','none')
+                    video.attr('src',src)
+                    video.attr('poster',img)
+                    if(src!=null){
+                        div2.append(video)
+                    }
+                    // console.log(div1.text())
+                    if(div1.text()==''){
+                        div1.css('border','none')
+                    }
+                    $('.outer').css('background-color','white')
+                    $('.outer').css('opacity','0.6')
+                }
+                if(obj.arr.length==1){
+                    var p2 = $('<p class="hint">暂无更多回答……</p>')
+                    $("#mess").append(p2)
+                }
+                //  如果回答内容多于一条，则显示更多内容
+
+                if(obj.arr.length>1) {
+                    $('#more').css('display', 'block')
+
+                    //点击更多回答，显示其余答案
+                    $('#more').click(function () {
+
+                        for (let index = 1; index < obj.arr.length; index++) {
+
+                            if(obj.arr[index].indexOf('video') != -1 ){
+
+                                var data1 = replace(obj.arr[index])
+                                //插入视频
+                                var video = $('<video controls width="50%"></video>')
+                                // video.attr('src',link)
+
+                                var p = $('<p></p>')
+                                var n=index+1
+                                p.html("回答"+n+":")
+                                //放置答案
+                                var div1 =$('<div class="answer"></div>')
+                                div1.html(data1)
+                                var div2 = $('<div class="outer"></div>')
+                                div2.append(p)
+                                div2.append(div1)
+                                $('#mess').append(div2)
+                                //显示视频
+                                var src = $('video').attr('src')
+                                var img = $('video').attr('img')
+                                $('video').css('display','none')
+                                video.attr('src',src)
+                                video.attr('poster',img)
+                                if(src!=null){
+                                    div2.append(video)
+                                }
+
+                            }else{
+                                // console.log('无视频')
+                                //插入视频
+                                // var video = $('<video controls width="50%"></video>')
+                                // video.attr('src',link)
+
+                                var p = $('<p></p>')
+                                var n=index+1
+                                p.html("回答"+n+":")
+                                //放置答案
+                                var div1 =$('<div class="answer"></div>')
+                                div1.html(obj.arr[index])
+                                var div2 = $('<div class="outer"></div>')
+                                div2.append(p)
+                                div2.append(div1)
+                                $('#mess').append(div2)
+
+                            }
+                            // console.log(div1.text())
+                            if(div1.text()==''){
+                                div1.css('border','none')
+                            }
+                            //    向下转为向上收起
+                            $('#more').css('display', 'none')
+                            $('#less').css('display', 'block')
+
+
+                        }
+
+                        $('.outer').css('background-color','white')
+                        $('.outer').css('opacity','0.6')
+                    })
+                }
+                //    点击向上图标折叠答案
+                $('#less').click(function (){
+                    for(let index=1;index<obj.arr.length;index++){
+                        $('#mess').children().last().remove();
+                    }
+                    $('#less').css('display','none')
+                    $('#more').css('display','block')
+                })
+            }
+        })
+
+        $('#publish').click (function (){
+            var text = $('#answer-content').val();
+            console.log(text)
+            //放置答案
+            var p = $('<p>我的答案:</p>')
+            var div1 =$('<div class="answer"></div>')
+            div1.html(text)
+            var div2 = $('<div class="outer"></div>')
+            div2.append(p)
+            div2.append(div1)
+            $('#mess').append(div2)
+            $('.outer').css('background-color','white')
+            $('.outer').css('opacity','0.6')
+            $('#answer-content').val('')
+        })
+    })
+    function getCookie(cname) {
+        var name = cname + '=';
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+    }
+    function replace(str)
+    {
+        // var key = 'video';
+
+        re=new RegExp("video","g");
+        var newstr=str.replace(re,"ideo");
+        return newstr;
+    }
+</script>
+</body>
+</html>

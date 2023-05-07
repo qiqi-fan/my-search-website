@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="GBK">
+    <title>我要提问</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="//at.alicdn.com/t/c/font_3772013_q68qvgyr2kf.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.js"></script>
+    <style>
+        #content {
+            width: 800px;
+            height: 600px;
+            /* background-color: antiquewhite; */
+            margin: 50px auto;
+            padding-left: 50px;
+        }
+
+        #content p {
+            /* margin-top: 130px; */
+            /* margin-left: 50px; */
+            /* font-size: 25px; */
+            color: rgb(130, 150, 178);
+        }
+
+        #title {
+            width: 600px;
+            height: 50px;
+            font-size: 24px;
+            border: 1px solid rgb(130, 150, 178);
+            border-radius: 5px;
+        }
+
+        #info {
+            width: 600px;
+            height: 400px;
+            border: 2px solid rgb(130, 150, 178);
+            margin-top: 50px;
+            border-radius: 5px;
+        }
+
+        #info textarea {
+            border: none;
+            outline: none;
+            width: 588px;
+            height: 270px;
+            line-height: 25px;
+            font-size: 25px;
+            margin: 5px;
+        }
+
+        #info:hover {
+            border: 2px solid rgb(59, 185, 137);
+        }
+
+        .file {
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgb(130, 150, 178);
+            float: left;
+            /* margin-left: -100px; */
+            cursor: pointer;
+        }
+        #file1{
+            margin-left: -100px;
+        }
+        #file2{
+            margin-left: 30px;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: none;
+            margin-left: 30px;
+        }
+        /*.file input {*/
+        /*    display: none;*/
+        /*}*/
+
+        button {
+            width: 100px;
+            height: 40px;
+            margin-left: 300px;
+            margin-top: 30px;
+            border: none;
+            background-color: rgb(50, 204, 121);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ::-moz-placeholder {
+            color: rgb(191, 206, 206);
+        }
+
+        ::-webkit-input-placeholder {
+            color: rgb(196, 213, 213);
+        }
+        svg{
+            width: 50px;
+            height: 50px;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .file p{
+            font-size: 16px;
+            text-align: center;
+            margin-top: -0px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <p style="font-size: 25px;">提问</p>
+    <input type="text" id="title" placeholder="请用一句话简单描述您的问题">
+    <div id="info">
+        <textarea name="" id="infos" cols="30" rows="10" placeholder="详细说明问题，以便获得更好的回答"></textarea>
+    </div>
+    <button id="submit">提交</button>
+</div>
+
+<script>
+    // 设置url
+    // var local = 'http://192.168.245.98:8080'
+    // var local = 'http://192.168.0.127:8080'
+    var local = 'http://192.168.0.106:8080'
+    var btn = document.getElementById('submit')
+
+    // 点击按钮发送请求
+    $('#title').keyup(function (e){
+        if(e.keyCode==13){
+            $("#submit").trigger("click")
+        }
+    })
+    btn.onclick = function(){
+        var title = document.getElementById('title').value;
+        var content = document.getElementById('infos').value;
+        var question={'title':title,'info':content}
+        if(!title){
+            alert("标题不能为空！")
+        }else{
+            localStorage.setItem("question",JSON.stringify(question))
+            $('#title').blur();
+            $('#title').val('')
+            alert("发布成功！")
+        }
+    }
+</script>
+</body>
+
+</html>
